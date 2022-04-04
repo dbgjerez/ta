@@ -3,5 +3,5 @@ kind: Namespace
 metadata: 
   labels:
     kubernetes.io/metadata.name: prod
-    argocd.argoproj.io/managed-by: gitops
+    argocd.argoproj.io/managed-by: argocd
   name: prod
