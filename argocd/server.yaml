@@ -9,6 +9,3 @@ spec:
     policy: |
       g, cluster-admins, role:admin
     scopes: '[groups]'
-  server: 
-    route:
-      enabled: true
