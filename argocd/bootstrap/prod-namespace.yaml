@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata: 
-  labels:
-    kubernetes.io/metadata.name: prod
-    argocd.argoproj.io/managed-by: argocd
-  name: prod
