@@ -1,4 +1,4 @@
-module bf-candle
+module ta-bf-candle-reader
 
 go 1.17
 
