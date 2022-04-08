@@ -29,4 +29,6 @@ EXPOSE 8080
 
 USER nonroot:nonroot
 
+ENV GIN_MODE=release
+
 ENTRYPOINT ["/ta-bf-candle-reader"]
