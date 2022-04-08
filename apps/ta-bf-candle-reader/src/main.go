@@ -19,11 +19,12 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
+	ws := adapter.NewConnection(ctx)
 	router := gin.Default()
 
 	v1 := router.Group("/api/v1")
 	{
-		v1.GET("/health", interfaces.HealthcheckGetHandler())
+		v1.GET("/health", interfaces.HealthcheckGetHandler(ws))
 	}
 
 	router.NoRoute(func(c *gin.Context) {
@@ -41,7 +42,6 @@ func main() {
 		}
 	}()
 
-	ws := adapter.NewConnection(ctx)
 	go func() {
 		ws.Subscribe(common.TradingPrefix+bitfinex.BTCUSD, common.OneDay)
 	}()
