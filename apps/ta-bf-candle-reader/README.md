@@ -7,5 +7,5 @@
 
 ## Run
 ```zsh
-❯ docker run ta-bf-candle-reader:latest
+❯ docker run -p 8080:8080 ta-bf-candle-reader:latest
 ```
