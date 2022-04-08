@@ -1,0 +1,10 @@
+app:
+  name: ta-bf-candle-reader
+replicas: 1
+image:
+  name: b0rr3g0/ta-bf-candle-reader
+  version: latest
+liveness:
+  path: /api/v1/health
+readiness:
+  path: /api/v1/health
