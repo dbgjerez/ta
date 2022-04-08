@@ -50,5 +50,4 @@ func main() {
 	ws.Close()
 	srv.Shutdown(ctx)
 	os.Exit(0)
-	log.Println("Cerrando")
 }
