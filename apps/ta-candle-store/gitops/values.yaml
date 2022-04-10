@@ -1,8 +1,8 @@
 app:
-  name: ta-bf-candle-reader
+  name: ta-candle-store
 replicas: 1
 image:
-  name: b0rr3g0/ta-bf-candle-reader
+  name: b0rr3g0/ta-candle-store
   version: latest
 liveness:
   path: /api/v1/health
