@@ -14,7 +14,7 @@ RUN go mod download
 COPY src ./
 
 
-RUN go build -o /ta-bf-candle-reader
+RUN go build -o /ta-candle-store
 
 ##
 ## Deploy
@@ -23,7 +23,7 @@ FROM gcr.io/distroless/base-debian10
 
 WORKDIR /
 
-COPY --from=build /ta-bf-candle-reader /ta-bf-candle-reader
+COPY --from=build /ta-candle-store /ta-candle-store
 
 EXPOSE 8080
 
@@ -31,4 +31,4 @@ USER nonroot:nonroot
 
 ENV GIN_MODE=release
 
-ENTRYPOINT ["/ta-bf-candle-reader"]
+ENTRYPOINT ["/ta-candle-store"]
