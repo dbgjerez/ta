@@ -9,6 +9,6 @@ spec:
     kind: '*'
   destinations:
   - namespace: 'prod'
-    server: '*'
+    server: 'in-cluster'
   sourceRepos:
   - '*'
