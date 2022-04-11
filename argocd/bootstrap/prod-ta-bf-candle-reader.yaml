@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ta-prod-bf-candle-reader
+  namespace: argocd
+spec:
+  destination:
+    namespace: prod
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: apps/ta-bf-candle-reader/gitops
+    repoURL: https://github.com/dbgjerez/ta.git
+    targetRevision: HEAD
