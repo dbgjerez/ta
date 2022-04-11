@@ -7,8 +7,10 @@ spec:
   destination:
     namespace: prod
     server: https://kubernetes.default.svc
-  project: default
+  project: ta
   source:
     path: apps/ta-bf-candle-reader/gitops
     repoURL: https://github.com/dbgjerez/ta.git
     targetRevision: HEAD
+  syncPolicy:
+    automated: {}

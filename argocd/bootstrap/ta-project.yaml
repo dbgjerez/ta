@@ -9,6 +9,6 @@ spec:
     kind: '*'
   destinations:
   - namespace: 'prod'
-    server: 'in-cluster'
+    server: 'https://kubernetes.default.svc'
   sourceRepos:
-  - '*'
+  - 'ta'
