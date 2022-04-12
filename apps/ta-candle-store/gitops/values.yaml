@@ -3,7 +3,7 @@ app:
 replicas: 1
 image:
   name: b0rr3g0/ta-candle-store
-  version: latest
+  version: 0.1
 liveness:
   path: /api/v1/health
 readiness:
