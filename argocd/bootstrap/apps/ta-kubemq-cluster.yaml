@@ -1,24 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: ta-kubemq-cluster
+  name: guestbook
 spec:
   generators:
   - list:
       elements:
-      - env: 'dev'
-      - env: 'prod'
+      - cluster: engineering-dev
+        url: https://1.2.3.4
+      - cluster: engineering-prod
+        url: https://2.4.6.8
+      - cluster: finance-preprod
+        url: https://9.8.7.6
   template:
-    metadata: 
-      name: '{{env}}-ta-kubemq-cluster'
+    metadata:
+      name: '{{cluster}}-guestbook'
     spec:
-      destination:
-        namespace: '{{env}}'
-        server: https://kubernetes.default.svc
-      project: ta
       source:
-        path: apps/kubemq-cluster
-        repoURL: https://github.com/dbgjerez/ta.git
+        repoURL: https://github.com/infra-team/cluster-deployments.git
         targetRevision: HEAD
-      syncPolicy:
-        automated: {}
+        path: guestbook/{{cluster}}
+      destination:
+        server: '{{url}}'
+        namespace: guestbook
