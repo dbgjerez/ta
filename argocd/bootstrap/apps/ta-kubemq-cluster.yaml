@@ -15,7 +15,7 @@ spec:
       destination:
         namespace: '{{env}}'
         server: https://kubernetes.default.svc
-      project: default
+      project: ta
       source:
         path: apps/kubemq-cluster
         repoURL: https://github.com/dbgjerez/ta.git
