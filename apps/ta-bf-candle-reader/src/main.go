@@ -19,7 +19,9 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
-	ws := adapter.NewConnection(ctx)
+	mq := adapter.KubemqNewConnection(ctx)
+
+	ws := adapter.NewConnection(ctx, mq)
 	router := gin.Default()
 
 	v1 := router.Group("/api/v1")
@@ -32,7 +34,7 @@ func main() {
 	})
 
 	srv := &http.Server{
-		Addr:    ":8080",
+		Addr:    ":8081",
 		Handler: router,
 	}
 
@@ -43,11 +45,12 @@ func main() {
 	}()
 
 	go func() {
-		ws.Subscribe(common.TradingPrefix+bitfinex.BTCUSD, common.OneDay)
+		ws.Subscribe(common.TradingPrefix+bitfinex.BTCUSD, common.FiveMinutes)
 	}()
 
 	<-ctx.Done()
 	ws.Close()
 	srv.Shutdown(ctx)
+	mq.Close()
 	os.Exit(0)
 }
