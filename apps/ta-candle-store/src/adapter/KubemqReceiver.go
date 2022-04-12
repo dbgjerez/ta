@@ -9,20 +9,22 @@ import (
 )
 
 type KubemqConnection struct {
-	client *kubemq.EventsClient
-	ctx    context.Context
+	client   *kubemq.EventsClient
+	ctx      context.Context
+	clientid string
 }
 
 func KubemqNewConnection(context context.Context) (conn *KubemqConnection) {
+	clientid := uuid.New()
 	client, err := kubemq.NewEventsClient(context,
-		kubemq.WithAddress("localhost", 50000),
-		kubemq.WithClientId("ta-candle-store"),
+		kubemq.WithAddress("ta-kubemq", 50000),
+		kubemq.WithClientId(clientid),
 		kubemq.WithTransportType(kubemq.TransportTypeGRPC))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return &KubemqConnection{client: client, ctx: context}
+	return &KubemqConnection{client: client, ctx: context, clientid: clientid}
 }
 
 func (conn KubemqConnection) Subscribe() {
