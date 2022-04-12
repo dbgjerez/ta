@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"ta-candle-store/adapter"
 	"ta-candle-store/interfaces"
 
 	"github.com/gin-gonic/gin"
@@ -15,6 +16,11 @@ import (
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
+
+	mq := adapter.KubemqNewConnection(ctx)
+	go func() {
+		mq.Subscribe()
+	}()
 
 	router := gin.Default()
 
@@ -40,5 +46,6 @@ func main() {
 
 	<-ctx.Done()
 	srv.Shutdown(ctx)
+	mq.Close()
 	os.Exit(0)
 }
