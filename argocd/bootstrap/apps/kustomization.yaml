@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - prod-ta-bf-candle-reader.yaml
   - prod-ta-candle-store.yaml
+  - ta-kafka-cluster.yaml
