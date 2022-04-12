@@ -14,3 +14,17 @@
 ```
 
 ## Bootstrap the cluster
+
+### Create the namespaces
+> **NOTE**: I have to add the namespace to the bootstrap. 
+
+```zsh
+❯ k apply -f argocd/ta-prod-namespaces.yaml
+```
+
+### Create the application
+This application references a repositories, app projects and applications.
+
+```zsh
+❯ k apply -f argocd/ta-app-bootstrap.yaml
+```
