@@ -5,3 +5,4 @@ resources:
   - prod-ta-candle-store.yaml
   - prod-ta-kubemq-cluster.yaml
   - dev-ta-kubemq-cluster.yaml
+  - dev-ta-bf-candle-reader.yaml
