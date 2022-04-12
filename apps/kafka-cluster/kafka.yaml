@@ -19,9 +19,19 @@ spec:
         type: internal
         tls: true
     replicas: 1
+    resources: 
+      requests:
+        memory: 128Mi
+      limits:
+        memory: 256Mi
     storage:
       type: ephemeral
   zookeeper:
     replicas: 1
+    resources: 
+      requests:
+        memory: 128Mi
+      limits:
+        memory: 256Mi
     storage:
       type: ephemeral
