@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: ta-kubemq-cluster
+  namespace: argocd
 spec:
   generators:
   - list:
@@ -11,6 +12,7 @@ spec:
   template:
     metadata: 
       name: '{{env}}-ta-kubemq-cluster'
+      namespace: argocd
     spec:
       destination:
         namespace: '{{env}}'
