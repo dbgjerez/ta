@@ -10,5 +10,7 @@ spec:
   destinations:
   - namespace: 'prod'
     server: 'https://kubernetes.default.svc'
+  - namespace: 'dev'
+    server: 'https://kubernetes.default.svc'
   sourceRepos:
   - 'ta'
