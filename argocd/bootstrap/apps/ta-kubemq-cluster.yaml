@@ -2,17 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: ta-kubemq-cluster
-  namespace: argocd
 spec:
   generators:
   - list:
       elements:
-      - env: dev
-      - env: prod
+      - env: 'dev'
+      - env: 'prod'
   template:
     metadata: 
       name: '{{env}}-ta-kubemq-cluster'
-      namespace: argocd
     spec:
       destination:
         namespace: '{{env}}'
