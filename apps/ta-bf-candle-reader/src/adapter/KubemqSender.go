@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/kubemq-io/kubemq-go"
+	"github.com/kubemq-io/kubemq-go/pkg/uuid"
 )
 
 type KubemqConnection struct {
@@ -14,7 +15,7 @@ type KubemqConnection struct {
 
 func KubemqNewConnection(context context.Context) (conn *KubemqConnection) {
 	client, err := kubemq.NewEventsClient(context,
-		kubemq.WithAddress("localhost", 50000),
+		kubemq.WithAddress("ta-kubemq", 50000),
 		kubemq.WithClientId("go-sdk-cookbook-pubsub-events-load-balance"),
 		kubemq.WithTransportType(kubemq.TransportTypeGRPC))
 	if err != nil {
@@ -24,9 +25,7 @@ func KubemqNewConnection(context context.Context) (conn *KubemqConnection) {
 }
 
 func (conn KubemqConnection) Send(obj string) {
-	log.Println("hola")
-
-	err := conn.client.Send(conn.ctx, kubemq.NewEvent().SetId("asd").SetChannel("bf-candle").SetBody([]byte(obj)))
+	err := conn.client.Send(conn.ctx, kubemq.NewEvent().SetId(uuid.New()).SetChannel("bf-candle").SetBody([]byte(obj)))
 	if err != nil {
 		log.Printf("error sending event %s, error: %s", obj, err)
 	}

@@ -34,7 +34,7 @@ func main() {
 	})
 
 	srv := &http.Server{
-		Addr:    ":8081",
+		Addr:    ":8080",
 		Handler: router,
 	}
 
@@ -45,7 +45,7 @@ func main() {
 	}()
 
 	go func() {
-		ws.Subscribe(common.TradingPrefix+bitfinex.BTCUSD, common.FiveMinutes)
+		ws.Subscribe(common.TradingPrefix+bitfinex.BTCUSD, common.OneDay)
 	}()
 
 	<-ctx.Done()
