@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ta-prod-candle-store
+  name: ta-dev-candle-store
   namespace: argocd
 spec:
   destination:
-    namespace: prod
+    namespace: dev
     server: https://kubernetes.default.svc
   project: ta
   source:
@@ -14,6 +14,6 @@ spec:
     targetRevision: HEAD
     helm:
       valueFiles:
-        - values.prod.yaml
+        - values.dev.yaml
   syncPolicy:
     automated: {}
