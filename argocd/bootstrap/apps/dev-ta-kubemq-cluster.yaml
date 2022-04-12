@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: dev-ta-kubemq-cluster
+  name: ta-dev-kubemq-cluster
   namespace: argocd
 spec:
   destination:
