@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - prod-ta-bf-candle-reader.yaml
   - prod-ta-candle-store.yaml
-  - ta-kubemq-cluster.yaml
+  - prod-ta-kubemq-cluster.yaml
+  - dev-ta-kubemq-cluster.yaml
