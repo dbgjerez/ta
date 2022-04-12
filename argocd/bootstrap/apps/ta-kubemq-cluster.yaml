@@ -12,7 +12,7 @@ spec:
     metadata: 
       name: {{env}}-ta-kubemq-cluster
     destination:
-      namespace: {{env}}
+      namespace: prod
       server: https://kubernetes.default.svc
     project: ta
     source:
