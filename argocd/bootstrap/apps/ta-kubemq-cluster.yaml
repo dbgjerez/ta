@@ -10,10 +10,10 @@ spec:
       - env: prod
   template:
     metadata: 
-      name: 'prod-ta-kubemq-cluster'
+      name: '{{env}}-ta-kubemq-cluster'
     spec:
       destination:
-        namespace: 'prod'
+        namespace: '{{env}}'
         server: https://kubernetes.default.svc
       project: ta
       source:
