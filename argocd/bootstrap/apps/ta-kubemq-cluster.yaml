@@ -18,7 +18,9 @@ spec:
       project: ta
       source:
         path: apps/kubemq-cluster
-        repoURL: https://github.com/dbgjerez/ta.git
+        repoURL: 'https://github.com/dbgjerez/ta.git'
         targetRevision: HEAD
       syncPolicy:
-        automated: {}
+        automated: 
+          prune: true
+          selfHeal: true
