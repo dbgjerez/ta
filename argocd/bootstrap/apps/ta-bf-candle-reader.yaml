@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ta-bf-candle-reader
+spec:
+  generators:
+  - list:
+      elements:
+      - env: 'dev'
+      - env: 'prod'
+  template:
+    metadata:
+      name: 'ta-{{env}}-bf-candle-reader'
+    spec:
+      destination:
+        namespace: '{{env}}'
+        server: https://kubernetes.default.svc
+      project: ta
+      source:
+        path: apps/ta-bf-candle-reader/gitops
+        repoURL: https://github.com/dbgjerez/ta.git
+        targetRevision: HEAD
+        helm:
+          valueFiles:
+            - values.{{env}}.yaml
+      syncPolicy:
+        automated: 
+          prune: true
+          selfHeal: true
