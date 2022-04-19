@@ -30,3 +30,4 @@ helm upgrade --install \
 
 printf "URL: $HOST\n"
 
+kubectl apply -f ../bootstrap/ta-app-bootstrap.yaml
