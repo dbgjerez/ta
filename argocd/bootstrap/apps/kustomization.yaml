@@ -1,9 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - dev-ta-kubemq-cluster.yaml
   - prod-ta-bf-candle-reader.yaml
   - prod-ta-candle-store.yaml
-  - prod-ta-kubemq-cluster.yaml
-  - dev-ta-kubemq-cluster.yaml
   - dev-ta-bf-candle-reader.yaml
   - dev-ta-candle-store.yaml

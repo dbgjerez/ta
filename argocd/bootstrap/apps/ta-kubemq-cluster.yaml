@@ -9,16 +9,16 @@ spec:
       - env: 'dev'
       - env: 'prod'
   template:
-    metadata: 
-      name: '{{env}}-ta-kubemq-cluster'
+    metadata:
+      name: 'ta-{{env}}-kubemq-cluster'
     spec:
       destination:
         namespace: '{{env}}'
-        server: https://kubernetes.default.svc
+        server: 'https://kubernetes.default.svc'
       project: ta
       source:
         path: apps/kubemq-cluster
-        repoURL: 'https://github.com/dbgjerez/ta.git'
+        repoURL: https://github.com/dbgjerez/ta.git
         targetRevision: HEAD
       syncPolicy:
         automated: 
