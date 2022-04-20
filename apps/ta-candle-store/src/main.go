@@ -17,6 +17,8 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
+	db := adapter.DBNewConnection()
+
 	mq := adapter.KubemqNewConnection(ctx)
 	go func() {
 		mq.Subscribe()
@@ -47,5 +49,6 @@ func main() {
 	<-ctx.Done()
 	srv.Shutdown(ctx)
 	mq.Close()
+	db.Close()
 	os.Exit(0)
 }

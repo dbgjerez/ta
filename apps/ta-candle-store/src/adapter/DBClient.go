@@ -1,6 +1,8 @@
 package adapter
 
 import (
+	"log"
+
 	c "github.com/ostafen/clover"
 )
 
@@ -15,4 +17,5 @@ func DBNewConnection() (dbClient *DBClient) {
 
 func (client *DBClient) Close() {
 	client.db.Close()
+	log.Println("closing db connection")
 }
