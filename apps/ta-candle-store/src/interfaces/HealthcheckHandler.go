@@ -10,7 +10,7 @@ import (
 type HealthcheckHandler struct {
 }
 
-func HealthcheckGetHandler() func(c *gin.Context) {
+func (handler *HealthcheckHandler) HealthcheckGetHandler() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		h := dto.Health{}
 		h.Status = dto.HealhStatusUp
