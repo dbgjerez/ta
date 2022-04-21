@@ -19,16 +19,22 @@ func main() {
 
 	db := adapter.DBNewConnection()
 
-	mq := adapter.KubemqNewConnection(ctx)
+	//mq := adapter.KubemqNewConnection(ctx)
 	go func() {
-		mq.Subscribe()
+		//mq.Subscribe()
 	}()
 
 	router := gin.Default()
 
 	v1 := router.Group("/api/v1")
 	{
-		v1.GET("/health", interfaces.HealthcheckGetHandler())
+		h := interfaces.HealthcheckHandler{}
+		v1.GET("/health", h.HealthcheckGetHandler())
+	}
+	candle := router.Group("/api/v1/candle")
+	{
+		h := interfaces.NewCandleController(db)
+		candle.GET("/:id", h.GetCandle)
 	}
 
 	router.NoRoute(func(c *gin.Context) {
@@ -48,7 +54,7 @@ func main() {
 
 	<-ctx.Done()
 	srv.Shutdown(ctx)
-	mq.Close()
+	//mq.Close()
 	db.Close()
 	os.Exit(0)
 }
