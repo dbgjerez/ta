@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 	"ta-candle-store/adapter"
+	"ta-candle-store/domain/model"
 	"ta-candle-store/interfaces"
 
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,7 @@ func main() {
 	defer stop()
 
 	db := adapter.DBNewConnection()
+	candleRespository := model.NewCandleRepository(db)
 
 	//mq := adapter.KubemqNewConnection(ctx)
 	go func() {
@@ -33,7 +35,7 @@ func main() {
 	}
 	candle := router.Group("/api/v1/candle")
 	{
-		h := interfaces.NewCandleController(db)
+		h := interfaces.NewCandleController(candleRespository)
 		candle.GET("/:id", h.GetCandle)
 	}
 
