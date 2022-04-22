@@ -10,6 +10,7 @@ import (
 const (
 	ParamIDName  = "id" // find by id
 	BodyDataName = "data"
+	BodyDataSize = "size"
 )
 
 type CandleController struct {
@@ -23,5 +24,5 @@ func NewCandleController(dao *model.CandleRepository) *CandleController {
 func (controller *CandleController) GetCandle(c *gin.Context) {
 	id := c.Param(ParamIDName)
 	candles := controller.repository.FindAllByType(id)
-	c.JSON(http.StatusOK, gin.H{BodyDataName: candles})
+	c.JSON(http.StatusOK, gin.H{BodyDataName: candles, BodyDataSize: len(candles)})
 }

@@ -25,7 +25,7 @@ func (dao *CandleRepository) FindAllByType(coin string) []Candle {
 	query := dao.db.Query(CollectionName).Where(c.Field("symbol").Eq(coin))
 	docs := dao.db.FindAllByCriteria(query)
 	var candle *Candle
-	var candles []Candle
+	var candles []Candle = []Candle{}
 	for _, doc := range docs {
 		doc.Unmarshal(&candle)
 		candles = append(candles, *candle)
