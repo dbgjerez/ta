@@ -22,7 +22,7 @@ func NewCandleRepository(db *adapter.DBClient) *CandleRepository {
 }
 
 func (dao *CandleRepository) FindAllByType(coin string) []Candle {
-	query := dao.db.Query(CollectionName).Where(c.Field("coin").Eq(coin))
+	query := dao.db.Query(CollectionName).Where(c.Field("symbol").Eq(coin))
 	docs := dao.db.FindAllByCriteria(query)
 	var candle *Candle
 	var candles []Candle
