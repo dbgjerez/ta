@@ -1,6 +1,7 @@
 package model
 
 type Candle struct {
+	Id        string  `json:"_id"`
 	Symbol    string  `json:"symbol"`
 	Market    string  `json:"market"`
 	Precision string  `json:"precision"`
