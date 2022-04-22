@@ -28,12 +28,13 @@ func (client *DBClient) CreateCollection(collection string) {
 	}
 }
 
-func (client *DBClient) InsertOne(fields map[string]interface{}, collection string) {
+func (client *DBClient) InsertOne(fields map[string]interface{}, collection string) error {
 	doc := c.NewDocumentOf(fields)
-	id, err := client.db.InsertOne(collection, doc)
+	_, err := client.db.InsertOne(collection, doc)
 	if err != nil {
-		log.Printf("=====> %s", id)
+		return err
 	}
+	return nil
 }
 
 func (client *DBClient) FindAllByCriteria(query *c.Query) []*c.Document {
