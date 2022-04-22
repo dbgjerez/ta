@@ -1,6 +1,7 @@
 package model
 
 import (
+	"encoding/json"
 	"log"
 	"ta-candle-store/adapter"
 
@@ -21,8 +22,8 @@ func NewCandleRepository(db *adapter.DBClient) *CandleRepository {
 	return &CandleRepository{db: db, collections: CollectionName}
 }
 
-func (dao *CandleRepository) FindAllByType(coin string) []Candle {
-	query := dao.db.Query(CollectionName).Where(c.Field("symbol").Eq(coin))
+func (dao *CandleRepository) FindAllByType(symbol string) []Candle {
+	query := dao.db.Query(CollectionName).Where(c.Field("symbol").Eq(symbol))
 	docs := dao.db.FindAllByCriteria(query)
 	var candle *Candle
 	var candles []Candle = []Candle{}
@@ -32,4 +33,13 @@ func (dao *CandleRepository) FindAllByType(coin string) []Candle {
 		log.Println(candle)
 	}
 	return candles
+}
+
+func (dao *CandleRepository) FindCandle()
+
+func (dao *CandleRepository) Save(candle *Candle) {
+	data, _ := json.Marshal(candle)
+	var myMap map[string]interface{}
+	json.Unmarshal(data, &myMap)
+	dao.db.InsertOne(myMap, CollectionName)
 }

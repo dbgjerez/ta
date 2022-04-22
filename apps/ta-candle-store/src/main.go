@@ -53,6 +53,17 @@ func main() {
 			log.Fatalf("listen: %s\n", err)
 		}
 	}()
+	c := &model.Candle{
+		Symbol:    "UTC",
+		Market:    "BF",
+		Precision: "1D",
+		Ts:        1650499200,
+		Open:      12.1,
+		Close:     12.2,
+		High:      12.23,
+		Low:       12.1,
+		Volume:    245.567}
+	candleRespository.Save(c)
 
 	<-ctx.Done()
 	srv.Shutdown(ctx)

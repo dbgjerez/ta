@@ -30,7 +30,10 @@ func (client *DBClient) CreateCollection(collection string) {
 
 func (client *DBClient) InsertOne(fields map[string]interface{}, collection string) {
 	doc := c.NewDocumentOf(fields)
-	client.db.InsertOne(collection, doc)
+	id, err := client.db.InsertOne(collection, doc)
+	if err != nil {
+		log.Printf("=====> %s", id)
+	}
 }
 
 func (client *DBClient) FindAllByCriteria(query *c.Query) []*c.Document {
