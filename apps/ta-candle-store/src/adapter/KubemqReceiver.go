@@ -2,7 +2,9 @@ package adapter
 
 import (
 	"context"
+	"encoding/json"
 	"log"
+	"ta-candle-store/domain/model"
 
 	"github.com/kubemq-io/kubemq-go"
 	"github.com/kubemq-io/kubemq-go/pkg/uuid"
@@ -37,7 +39,10 @@ func (conn KubemqConnection) Subscribe() {
 		if err != nil {
 			log.Fatal(err)
 		} else {
-			log.Printf("Receiver A - Event Received:\nEventID: %s\nChannel: %s\nMetadata: %s\nBody: %s\n", msg.Id, msg.Channel, msg.Metadata, msg.Body)
+			var candle model.Candle
+			if err := json.Unmarshal(msg.Body, &candle); err != nil {
+				log.Println("candle received fails: %s", err)
+			}
 		}
 	})
 }
