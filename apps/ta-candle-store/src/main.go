@@ -54,11 +54,11 @@ func main() {
 		}
 	}()
 	c := &model.Candle{
-		Symbol:    "UTC",
+		Symbol:    "btc",
 		Market:    "BF",
 		Precision: "1D",
 		Ts:        1650499200,
-		Open:      12.1,
+		Open:      222.1,
 		Close:     12.2,
 		High:      12.23,
 		Low:       12.1,

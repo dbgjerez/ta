@@ -54,7 +54,7 @@ func (dao *CandleRepository) FindCandle(symbol string, market string, precision 
 	}
 }
 
-func (dao *CandleRepository) Save(candle *Candle) {
+func (dao *CandleRepository) Save(candle *Candle) error {
 	c, err := dao.FindCandle(candle.Symbol, candle.Market, candle.Precision, candle.Ts)
 	if err != nil {
 		log.Printf("error saving a document %s", err)
@@ -62,10 +62,18 @@ func (dao *CandleRepository) Save(candle *Candle) {
 		if c != nil {
 			candle.Id = c.Id
 			candle.Version = c.Version + 1
+			return dao.UpdateOne(candle)
+		} else {
+			data := convert(candle)
+			return dao.db.InsertOne(data, CollectionName)
 		}
-		data := convert(candle)
-		dao.db.InsertOne(data, CollectionName)
 	}
+	return nil
+}
+
+func (dao *CandleRepository) UpdateOne(candle *Candle) error {
+	return dao.db.Query(CollectionName).
+		Where((*c.Criteria)(c.Field("_id").Eq(candle.Id))).Update(convert(candle))
 }
 
 func convert(candle *Candle) map[string]interface{} {
