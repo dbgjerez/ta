@@ -19,7 +19,7 @@ helm upgrade --install \
     argocd argo/argo-cd \
     --namespace argocd \
     --create-namespace \
-    --version 4.5.3 \
+    --version 4.5.7 \
     --set server.ingress.hosts="{$HOST}" \
     --values argocd-values.yaml \
     --wait
