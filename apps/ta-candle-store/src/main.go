@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
@@ -12,7 +13,24 @@ import (
 	"ta-candle-store/interfaces"
 
 	"github.com/gin-gonic/gin"
+	"github.com/kubemq-io/kubemq-go"
 )
+
+func OnEvent(dao *model.CandleRepository) func(msg *kubemq.Event, err error) {
+	return func(msg *kubemq.Event, err error) {
+		if err != nil {
+			log.Fatal(err)
+		} else {
+			var candle model.Candle
+			err := json.Unmarshal(msg.Body, &candle)
+			if err != nil {
+				log.Printf("candle received fails: %s", err)
+			} else {
+				dao.Save(&candle)
+			}
+		}
+	}
+}
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
@@ -21,9 +39,9 @@ func main() {
 	db := adapter.DBNewConnection()
 	candleRespository := model.NewCandleRepository(db)
 
-	//mq := adapter.KubemqNewConnection(ctx)
+	mq := adapter.KubemqNewConnection(ctx)
 	go func() {
-		//mq.Subscribe()
+		mq.Subscribe(OnEvent(candleRespository))
 	}()
 
 	router := gin.Default()
@@ -53,21 +71,10 @@ func main() {
 			log.Fatalf("listen: %s\n", err)
 		}
 	}()
-	c := &model.Candle{
-		Symbol:    "btc",
-		Market:    "BF",
-		Precision: "1D",
-		Ts:        1650499200,
-		Open:      222.1,
-		Close:     12.2,
-		High:      12.23,
-		Low:       12.1,
-		Volume:    245.567}
-	candleRespository.Save(c)
 
 	<-ctx.Done()
 	srv.Shutdown(ctx)
-	//mq.Close()
+	mq.Close()
 	db.Close()
 	os.Exit(0)
 }

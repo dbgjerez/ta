@@ -2,9 +2,7 @@ package adapter
 
 import (
 	"context"
-	"encoding/json"
 	"log"
-	"ta-candle-store/domain/model"
 
 	"github.com/kubemq-io/kubemq-go"
 	"github.com/kubemq-io/kubemq-go/pkg/uuid"
@@ -29,22 +27,13 @@ func KubemqNewConnection(context context.Context) (conn *KubemqConnection) {
 	return &KubemqConnection{client: client, ctx: context, clientid: clientid}
 }
 
-func (conn KubemqConnection) Subscribe() {
+func (conn KubemqConnection) Subscribe(onEvent func(msg *kubemq.Event, err error)) {
 	channel := "bf-candle"
 	conn.client.Subscribe(conn.ctx, &kubemq.EventsSubscription{
 		Channel:  channel,
 		Group:    "ta-candle-store",
 		ClientId: uuid.New(),
-	}, func(msg *kubemq.Event, err error) {
-		if err != nil {
-			log.Fatal(err)
-		} else {
-			var candle model.Candle
-			if err := json.Unmarshal(msg.Body, &candle); err != nil {
-				log.Println("candle received fails: %s", err)
-			}
-		}
-	})
+	}, onEvent)
 }
 
 func (conn KubemqConnection) Close() {
