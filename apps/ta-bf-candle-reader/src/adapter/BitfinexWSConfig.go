@@ -34,14 +34,13 @@ func (conn BitfinexConnection) Subscribe(coin string, resolution common.CandleRe
 	for msg := range conn.client.Listen() {
 		s, tOk := msg.(*candle.Snapshot)
 		if tOk {
+			log.Printf("snapshot with %d candles received", len(s.Snapshot))
 			for _, c := range s.Snapshot {
-				log.Printf("candle: %s", toJson(c))
 				conn.mq.Send(toJson(c))
 			}
 		}
 		c, tOk := msg.(*candle.Candle)
 		if tOk {
-			log.Printf("candle: %s", toJson(c))
 			conn.mq.Send(toJson(c))
 		}
 		if _, ok := msg.(*websocket.InfoEvent); ok {
