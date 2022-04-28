@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         env: '{{env}}'
+        project: 'ta'
       name: 'ta-{{env}}-bf-candle-reader'
     spec:
       destination:

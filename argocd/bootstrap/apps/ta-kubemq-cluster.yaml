@@ -10,6 +10,9 @@ spec:
       - env: 'prod'
   template:
     metadata:
+      labels:
+        env: '{{env}}'
+        project: 'ta'
       name: 'ta-{{env}}-kubemq-cluster'
     spec:
       destination:
