@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"log"
 	"net/http"
 	"os"
@@ -11,6 +10,7 @@ import (
 	"ta-candle-store/adapter"
 	"ta-candle-store/domain/model"
 	"ta-candle-store/interfaces"
+	"ta-candle-store/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/kubemq-io/kubemq-go"
@@ -21,8 +21,7 @@ func OnEvent(dao *model.CandleRepository) func(msg *kubemq.Event, err error) {
 		if err != nil {
 			log.Fatal(err)
 		} else {
-			var candle model.Candle
-			err := json.Unmarshal(msg.Body, &candle)
+			candle, err := service.MapMsgToCandle(msg.Body)
 			if err != nil {
 				log.Printf("candle received fails: %s", err)
 			} else {

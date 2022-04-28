@@ -36,7 +36,7 @@ func (dao *CandleRepository) FindAllByType(symbol string) []Candle {
 	return candles
 }
 
-func (dao *CandleRepository) FindCandle(symbol string, market string, precision string, ts int32) (*Candle, error) {
+func (dao *CandleRepository) FindCandle(symbol string, market string, precision string, ts int64) (*Candle, error) {
 	query := dao.db.Query(CollectionName).
 		Where((*c.Criteria)(c.Field("symbol").Eq(symbol).
 			And((*c.Criteria)(c.Field("market").Eq(market))).

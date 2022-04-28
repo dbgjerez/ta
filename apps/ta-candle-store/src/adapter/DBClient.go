@@ -11,7 +11,7 @@ type DBClient struct {
 }
 
 func DBNewConnection() (dbClient *DBClient) {
-	db, err := c.Open("clover-db")
+	db, err := c.Open("/data")
 	if err != nil {
 		log.Fatalf("error opening clover database: %s", err)
 	}
