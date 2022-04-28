@@ -4,3 +4,6 @@
 
 # 0.2
 * kubemq send events
+
+# 0.3 
+* read snapshot when connect to the ws
