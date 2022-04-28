@@ -7,3 +7,6 @@
 
 # 0.3 
 * read snapshot when connect to the ws
+
+## 0.3.1 
+* port error
