@@ -31,7 +31,6 @@ func (dao *CandleRepository) FindAllByType(symbol string) []Candle {
 	for _, doc := range docs {
 		doc.Unmarshal(&candle)
 		candles = append(candles, *candle)
-		log.Println(candle)
 	}
 	return candles
 }
