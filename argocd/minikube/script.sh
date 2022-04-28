@@ -1,4 +1,4 @@
-minikube start --cpus=4 --memory='8g'
+minikube start --cpus=4 --memory='8g' --driver=docker
 minikube addons enable ingress
 
 kubectl --namespace ingress-nginx wait \
