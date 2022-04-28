@@ -30,3 +30,12 @@ spec:
           httpGet:
             path: {{ .Values.readiness.path }}
             port: 8080
+        volumeMounts:
+        - mountPath: /data
+          name: {{ .Values.app.name }}
+      volumes:
+      - name: {{ .Values.app.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.app.name }}
+
+
