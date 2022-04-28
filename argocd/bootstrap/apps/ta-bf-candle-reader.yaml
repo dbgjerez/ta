@@ -10,6 +10,8 @@ spec:
       - env: 'prod'
   template:
     metadata:
+      labels:
+        env: '{{env}}'
       name: 'ta-{{env}}-bf-candle-reader'
     spec:
       destination:
