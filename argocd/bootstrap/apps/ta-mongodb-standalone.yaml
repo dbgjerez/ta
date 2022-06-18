@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ta-mongodb-standalone
+spec:
+  generators:
+  - list:
+      elements:
+      - env: 'dev'
+      - env: 'prod'
+  template:
+    metadata:
+      labels:
+        env: '{{env}}'
+        project: 'ta'
+      name: 'ta-{{env}}-mongodb-standalone'
+    spec:
+      destination:
+        namespace: '{{env}}'
+        server: 'https://kubernetes.default.svc'
+      project: ta
+      source:
+        path: apps/mongodb-standalone
+        repoURL: https://github.com/dbgjerez/ta.git
+        targetRevision: HEAD
+      syncPolicy:
+        automated: 
+          prune: true
+          selfHeal: true

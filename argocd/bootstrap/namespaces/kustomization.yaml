@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - ta-dev-namespace.yaml
   - ta-prod-namespace.yaml
+  - operators.yaml
