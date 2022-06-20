@@ -21,7 +21,7 @@ spec:
       project: ta
       source:
         path: apps/mongodb-standalone
-        repoURL: https://github.com/dbgjerez/ta.git
+        repoURL: https://github.com/pabloborrego93/ta.git
         targetRevision: HEAD
       syncPolicy:
         automated: 
