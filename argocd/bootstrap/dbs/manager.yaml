@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-operator
+  namespace: ot-operators
+  labels:
+    control-plane: mongodb-operator
+spec:
+  selector:
+    matchLabels:
+      control-plane: mongodb-operator
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        control-plane: mongodb-operator
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+      - command:
+        - /manager
+        args:
+        - --leader-elect
+        image: quay.io/opstree/mongodb-operator:v0.1.0
+        imagePullPolicy: Always
+        name: manager
+        securityContext:
+          allowPrivilegeEscalation: false
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 200m
+            memory: 400Mi
+          requests:
+            cpu: 200m
+            memory: 400Mi
+      serviceAccountName: mongodb-operator
+      terminationGracePeriodSeconds: 10
