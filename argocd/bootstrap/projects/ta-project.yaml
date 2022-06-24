@@ -16,4 +16,4 @@ spec:
   - 'ta'
   - 'https://github.com/dbgjerez/ta.git'
   - 'https://github.com/pabloborrego93/ta.git'
-  - 'https://github.com/mongodb/helm-charts'
+  - 'https://mongodb.github.io/helm-charts'
