@@ -3,7 +3,7 @@ kind: MongoDB
 metadata:
   name: demo-mongodb-cluster-1
 spec:
-  members: 3
+  members: 1
   version: 4.4.5-ent
   type: ReplicaSet
   authentication:
