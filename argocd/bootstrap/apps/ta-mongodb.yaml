@@ -22,7 +22,7 @@ spec:
       project: ta
       source:
         chart: community-operator
-        repoURL: https://github.com/mongodb/helm-charts
+        repoURL: https://github.com/mongodb/helm-charts/tree/main/charts
         targetRevision: 0.7.4
       syncPolicy:
         automated: 
