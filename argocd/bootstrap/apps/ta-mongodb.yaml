@@ -24,8 +24,6 @@ spec:
         chart: community-operator
         repoURL: https://github.com/mongodb/helm-charts
         targetRevision: 0.7.4
-        helm:
-          releaseName: community-operator
       syncPolicy:
         automated: 
           prune: true
