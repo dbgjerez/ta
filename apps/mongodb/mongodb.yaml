@@ -1,0 +1,32 @@
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: demo-mongodb-cluster-1
+  namespace: mongodb
+spec:
+  members: 3
+  version: 4.4.5-ent
+  type: ReplicaSet
+  authentication:
+    enabled: true
+    modes: ["SHA"]
+  cloudManager:
+    configMapRef:
+      name: myproject
+  credentials: organization-secret
+  persistent: true
+  podSpec:
+    podTemplate:
+      spec:
+       containers:
+        - name: mongodb-enterprise-database
+          resources:
+            limits:
+              cpu: 1
+              memory: 0.5G
+            requests:
+              cpu: 1
+              memory: 0.5G
+            persistence:
+              single:
+                storage: 10Gi
