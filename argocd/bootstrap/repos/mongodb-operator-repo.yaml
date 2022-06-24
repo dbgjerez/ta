@@ -3,6 +3,8 @@ kind: Secret
 metadata:
   name: mongodb-operator-repo
   namespace: mongodb
+  annotations:
+    managed-by: argocd.argoproj.io
   labels:
     argocd.argoproj.io/secret-type: repository
 stringData:
