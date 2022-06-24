@@ -1,6 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - github.com/mongodb/mongodb-kubernetes-operator/blob/master/config/crd/bases/mongodbcommunity.mongodb.com_mongodbcommunity.yaml
-  - github.com/mongodb/mongodb-kubernetes-operator/tree/master/config/rbac
-  - github.com/mongodb/mongodb-kubernetes-operator/blob/master/config/manager/manager.yaml

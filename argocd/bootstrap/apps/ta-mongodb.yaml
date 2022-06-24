@@ -20,9 +20,10 @@ spec:
         server: 'https://kubernetes.default.svc'
       project: ta
       source:
-        path: apps/mongodb
-        repoURL: https://github.com/pabloborrego93/ta.git
-        targetRevision: HEAD
+        chart: mongodb
+        repoURL: https://mongodb.github.io/helm-charts
+        helm:
+          releaseName: mongodb
       syncPolicy:
         automated: 
           prune: true
