@@ -22,6 +22,7 @@ spec:
       source:
         chart: mongodb
         repoURL: https://mongodb.github.io/helm-charts
+        targetRevision: 0.7.4
         helm:
           releaseName: mongodb
       syncPolicy:
