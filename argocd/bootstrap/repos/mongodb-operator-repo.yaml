@@ -7,5 +7,5 @@ metadata:
     argocd.argoproj.io/secret-type: repository
 stringData:
   url: https://github.com/mongodb/helm-charts
-  name: mongodb
+  name: mongodb-helm-charts
   type: helm
