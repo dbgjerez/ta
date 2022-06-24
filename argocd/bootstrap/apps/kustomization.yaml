@@ -4,4 +4,4 @@ resources:
   - ta-kubemq-cluster.yaml
   - ta-bf-candle-reader.yaml
   - ta-candle-store.yaml
-  - ta-mongodb-standalone.yaml
+  - ta-mongodb.yaml
