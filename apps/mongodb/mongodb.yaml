@@ -22,10 +22,10 @@ spec:
           resources:
             limits:
               cpu: 1
-              memory: 0.5G
+              memory: 0.25G
             requests:
               cpu: 1
-              memory: 0.5G
+              memory: 0.25G
             persistence:
               single:
                 storage: 10Gi
