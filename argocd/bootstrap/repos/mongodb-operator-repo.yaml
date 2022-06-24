@@ -6,6 +6,6 @@ metadata:
   labels:
     argocd.argoproj.io/secret-type: repository
 stringData:
-  url: https://github.com/mongodb/helm-charts/tree/main/charts/community-operator
-  name: community-operator
+  url: https://github.com/mongodb/helm-charts
+  name: mongodb
   type: helm
