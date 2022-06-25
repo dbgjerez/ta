@@ -20,7 +20,7 @@ spec:
         server: 'https://kubernetes.default.svc'
       project: ta
       source:
-        path: mongodb
+        path: apps/mongodb
         repoURL: https://github.com/pabloborrego93/ta.git
         targetRevision: HEAD
       syncPolicy:
