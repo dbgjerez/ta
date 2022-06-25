@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ta-operator-mongodb
-  namespace: argocd
+  namespace: operators
   labels:
     project: 'ta'
 spec:
