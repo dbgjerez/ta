@@ -1,31 +1,33 @@
-apiVersion: mongodb.com/v1
-kind: MongoDB
-metadata:
-  name: demo-mongodb-cluster-1
+apiVersion: mongodbcommunity.mongodb.com/v1
+kind: MongoDBCommunity
 spec:
-  members: 1
-  version: 4.4.5-ent
+  members: 3
   type: ReplicaSet
-  authentication:
-    enabled: true
-    modes: ["SHA"]
-  cloudManager:
-    configMapRef:
-      name: myproject
-  credentials: organization-secret
-  persistent: true
-  podSpec:
-    podTemplate:
-      spec:
-       containers:
-        - name: mongodb-enterprise-database
-          resources:
-            limits:
-              cpu: 1
-              memory: 0.25G
-            requests:
-              cpu: 1
-              memory: 0.25G
-            persistence:
-              single:
-                storage: 10Gi
+  version: "4.2.6"
+  security:
+    authentication:
+      modes: ["SCRAM"]
+  users:
+    - name: user
+      db: admin
+      passwordSecretRef: # a reference to the secret that will be used to generate the user's password
+        name: mongodb-secret
+      roles:
+        - name: clusterAdmin
+          db: admin
+        - name: userAdminAnyDatabase
+          db: admin
+      scramCredentialsSecretName: my-scram
+  additionalMongodConfig:
+    storage.wiredTiger.engineConfig.journalCompressor: zlib
+
+# the user credentials will be generated from this secret
+# once the credentials are generated, this secret is no longer required
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-secret
+type: Opaque
+stringData:
+  password: mypassword

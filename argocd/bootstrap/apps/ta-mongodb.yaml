@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: ta-mongodb
-  namespace: argocd
 spec:
   generators:
   - list:
@@ -21,9 +20,9 @@ spec:
         server: 'https://kubernetes.default.svc'
       project: ta
       source:
-        chart: community-operator
-        repoURL: https://mongodb.github.io/helm-charts
-        targetRevision: 0.7.4
+        path: mongodb
+        repoURL: https://github.com/pabloborrego93/ta.git
+        targetRevision: HEAD
       syncPolicy:
         automated: 
           prune: true
