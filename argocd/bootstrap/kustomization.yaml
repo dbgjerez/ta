@@ -4,5 +4,5 @@ resources:
   - namespaces
   - projects
   - repos
-  - dbs
+  - operators
   - apps

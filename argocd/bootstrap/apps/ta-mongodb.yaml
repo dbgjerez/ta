@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: ta-mongodb-standalone
+  name: ta-mongodb
 spec:
   generators:
   - list:
@@ -13,14 +13,14 @@ spec:
       labels:
         env: '{{env}}'
         project: 'ta'
-      name: 'ta-{{env}}-mongodb-standalone'
+      name: 'ta-{{env}}-mongodb'
     spec:
       destination:
         namespace: '{{env}}'
         server: 'https://kubernetes.default.svc'
       project: ta
       source:
-        path: apps/mongodb-standalone
+        path: apps/mongodb
         repoURL: https://github.com/dbgjerez/ta.git
         targetRevision: HEAD
       syncPolicy:
