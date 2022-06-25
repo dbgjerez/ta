@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ta-dev-namespace.yaml
   - ta-prod-namespace.yaml
-  - mongodb.yaml
+  - ta-operators.yaml

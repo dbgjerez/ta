@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: mongodb-operator-repo
-  namespace: mongodb
+  namespace: operators
   annotations:
     managed-by: argocd.argoproj.io
   labels:
