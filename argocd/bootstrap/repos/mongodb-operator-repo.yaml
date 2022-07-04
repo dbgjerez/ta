@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mongodb
+  name: repo-mongodb
   namespace: operators
   annotations:
     managed-by: argocd.argoproj.io
