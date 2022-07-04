@@ -4,16 +4,18 @@ metadata:
   name: ta-operator-mongodb
   namespace: argocd
   labels:
-    project: 'ta'
+    project: config
 spec:
   destination:
-    namespace: 'operators'
+    namespace: operators
     server: 'https://kubernetes.default.svc'
   project: ta
   source:
-    chart: community-operator
-    repoURL: https://mongodb.github.io/helm-charts
+    repoURL: 'https://mongodb.github.io/helm-charts'
     targetRevision: 0.7.4
+    helm:
+      releaseName: community-operator
+    chart: community-operator
   syncPolicy:
     automated: 
       prune: true

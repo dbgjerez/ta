@@ -15,4 +15,3 @@ spec:
   sourceRepos:
   - 'ta'
   - 'https://github.com/dbgjerez/ta.git'
-  - 'https://mongodb.github.io/helm-charts.git'
