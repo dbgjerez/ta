@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: config
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: 'operators'
+    server: 'https://kubernetes.default.svc'
+  sourceRepos:
+  - 'ta'
+  - 'https://github.com/dbgjerez/ta.git'
+  - 'https://mongodb.github.io/helm-charts.git'
