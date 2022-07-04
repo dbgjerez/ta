@@ -1,13 +1,14 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mongodb-operator-repo
+  name: mongodb
   namespace: operators
   annotations:
     managed-by: argocd.argoproj.io
   labels:
     argocd.argoproj.io/secret-type: repository
-stringData:
-  url: https://mongodb.github.io/helm-charts
-  name: mongodb-helm-charts
-  type: helm
+data:
+  name: bW9uZ29kYg==
+  project: dGE=
+  type: aGVsbQ==
+  url: aHR0cHM6Ly9tb25nb2RiLmdpdGh1Yi5pby9oZWxtLWNoYXJ0cw==
