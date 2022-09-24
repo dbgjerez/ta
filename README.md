@@ -15,6 +15,12 @@
 
 ## Bootstrap the cluster
 
+### rootless
+
+```zsh
+minikube config set rootless true
+```
+
 ### Create the namespaces
 > **NOTE**: I have to add the namespace to the bootstrap. 
 

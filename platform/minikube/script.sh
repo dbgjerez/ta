@@ -1,4 +1,4 @@
-minikube start --cpus=4 --memory='8g' --driver=docker
+minikube start --cpus=4 --memory='16g' --container-runtime=containerd
 minikube addons enable ingress
 
 kubectl --namespace ingress-nginx wait \
@@ -21,7 +21,7 @@ helm upgrade --install \
     --create-namespace \
     --version 4.5.7 \
     --set server.ingress.hosts="{$HOST}" \
-    --values argocd-values.yaml \
+    --values ../../argocd/argocd-values.yaml \
     --wait
 
 ## user=admin
@@ -30,4 +30,4 @@ helm upgrade --install \
 
 printf "URL: $HOST\n"
 
-kubectl apply -f ../bootstrap/ta-app-bootstrap.yaml
+kubectl apply -f ../../argocd/bootstrap/ta-app-bootstrap.yaml
