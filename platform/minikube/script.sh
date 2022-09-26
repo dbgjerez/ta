@@ -1,4 +1,4 @@
-minikube start --cpus=4 --memory='16g' --container-runtime=containerd
+minikube start --cpus=4 --memory='16g' --kubernetes-version=v1.20.2 --vm-driver=kvm2
 minikube addons enable ingress
 
 kubectl --namespace ingress-nginx wait \
@@ -6,28 +6,18 @@ kubectl --namespace ingress-nginx wait \
     --selector=app.kubernetes.io/component=controller \
     --timeout=120s
 
-INGRESS_HOST=$(minikube ip)
-HOST=argocd.$INGRESS_HOST.nip.io
 NS=argocd
 
-helm repo add argo \
-    https://argoproj.github.io/argo-helm
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-helm repo update
-
-helm upgrade --install \
-    argocd argo/argo-cd \
-    --namespace argocd \
-    --create-namespace \
-    --version 4.5.7 \
-    --set server.ingress.hosts="{$HOST}" \
-    --values ../../argocd/argocd-values.yaml \
-    --wait
+kubectl --namespace argocd wait \
+    --for=condition=ready pod \
+    --selector=app.kubernetes.io/component="argocd-application-controller" \
+    --timeout=120s
 
 ## user=admin
 ## password
 # kubectl -n argocd get secret argocd-initial-admin-secret -o json | jq -r ".data.password" | base64 -d
 
-printf "URL: $HOST\n"
-
-kubectl apply -f ../../argocd/bootstrap/ta-app-bootstrap.yaml
+#kubectl apply -f ../../argocd/bootstrap/ta-app-bootstrap.yaml
