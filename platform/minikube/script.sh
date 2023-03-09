@@ -1,23 +1,58 @@
-minikube start --cpus=4 --memory='16g' --kubernetes-version=v1.20.2 --vm-driver=kvm2
-minikube addons enable ingress
+PWD=$(pwd)
+FILE_ARGOCD_OPERATOR=/components/base/argocd/argocd-operator.yaml
+FILE_ARGOCD_SERVER=/components/base/argocd/argocd-server.yaml
+FILE_ARGOCD_BOOTSTRAP=/platform/minikube/bootstrap-components.yaml
+SLEEP=5
 
-kubectl --namespace ingress-nginx wait \
-    --for=condition=ready pod \
-    --selector=app.kubernetes.io/component=controller \
-    --timeout=120s
+if [[ ! $PWD$FILE_ARGOCD_SERVER ]] ; then
+	echo "❗You must execute the script from root git folder"
+	exit
+else
+	echo "👍 $FILE_ARGOCD_SERVER found"
+fi
 
-NS=argocd
+if [[ ! $PWD$FILE_ARGOCD_OPERATOR ]] ; then
+	echo "❗You must execute the script from root git folder"
+	exit
+else
+	echo "👍 $FILE_ARGOCD_OPERATOR found"
+fi
 
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+echo "👍 [All checks ok]"
+echo "-------"
 
-kubectl --namespace argocd wait \
-    --for=condition=ready pod \
-    --selector=app.kubernetes.io/component="argocd-application-controller" \
-    --timeout=120s
+minikube start --cpus=6 --memory='20g' --vm-driver=kvm2
 
-## user=admin
-## password
-# kubectl -n argocd get secret argocd-initial-admin-secret -o json | jq -r ".data.password" | base64 -d
+# minikube addons enable ingress
 
-#kubectl apply -f ../../argocd/bootstrap/ta-app-bootstrap.yaml
+# kubectl --namespace ingress-nginx wait \
+#     --for=condition=ready pod \
+#     --selector=app.kubernetes.io/component=controller \
+#     --timeout=120s
+
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.22.0/install.sh | bash -s v0.22.0
+
+kubectl create -f $PWD$FILE_ARGOCD_OPERATOR
+
+while  
+	! kubectl -n operators wait \
+		--for condition=established \
+		--timeout=60s \
+		crd/argocds.argoproj.io
+do 
+	echo "⌛ Waiting for CRD creations"
+	sleep $SLEEP 
+done
+
+while  
+	! kubectl --namespace operators wait \
+    	--for=condition=ready pod \
+    	--selector=control-plane=controller-manager \
+    	--timeout=60s
+do 
+	echo "⌛ Waiting for ArgoCD controller"
+	sleep $SLEEP 
+done
+
+kubectl create ns argocd
+kubectl apply -f $PWD$FILE_ARGOCD_SERVER
